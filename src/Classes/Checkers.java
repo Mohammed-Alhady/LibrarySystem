@@ -15,19 +15,19 @@ public class Checkers {
                 new FileReader("E:\\Main_folder\\programming\\java\\Library\\src\\Data\\admins.txt"));) {
             String line = br.readLine();
             while (line != null) {
-                String fullData[] = line.split(",");
-                for (String data : fullData) {
-                    String info[] = data.split(":");
-                    if (info[0].trim().equals("adminName")) {
-                        if (info[1].trim().toLowerCase().equals(name.toLowerCase())) {
-                            return true;
-                        }
-                        return false;
+                String data[] = line.split(",");
+                for (String subData : data) {
+                    String info[] = subData.split(":");
+                    switch (info[0]) {
+                        case "name":
+                            if (info[1].trim().toLowerCase().equals(name.toLowerCase())) {
+                                return true;
+                            }
                     }
                 }
                 line = br.readLine();
             }
-            return true;
+            return false;
         } catch (Exception e) {
             System.out.println("Something went wrong please try again\n");
             return false;
@@ -35,24 +35,33 @@ public class Checkers {
     } // end of the method
 
     // check if a password is correct
-    public static boolean checkAdminPassword(String password) {
+    public static boolean checkAdminPassword(String password, String name) {
         try (BufferedReader br = new BufferedReader(
                 new FileReader("E:\\Main_folder\\programming\\java\\Library\\src\\Data\\admins.txt"));) {
             String line = br.readLine();
             while (line != null) {
-                String fullData[] = line.split(",");
-                for (String data : fullData) {
-                    String info[] = data.split(":");
-                    if (info[0].trim().equals("password")) {
-                        if (info[1].trim().toLowerCase().equals(password.toLowerCase())) {
-                            return true;
-                        }
-                        return false;
+                boolean isName = false, isPassword = false;
+                String data[] = line.split(",");
+                for (String subData : data) {
+                    String info[] = subData.split(":");
+                    switch (info[0].trim()) {
+                        case "password":
+                            System.out.println(info[1].trim().toLowerCase().equals(password.toLowerCase()));
+                            if (info[1].trim().toLowerCase().equals(password.toLowerCase())) {
+                                isPassword = true;
+                            }
+                        case "name":
+                            if (info[1].trim().toLowerCase().equals(name.toLowerCase())) {
+                                isName = true;
+                            }
                     }
+                }
+                if (isName && isPassword) {
+                    return true;
                 }
                 line = br.readLine();
             }
-            return true;
+            return false;
         } catch (Exception e) {
             System.out.println("Something went wrong please try again\n");
             return false;
@@ -61,21 +70,19 @@ public class Checkers {
 
     // password checker
     // you have 3 chances berfore the system out
-    static int count = 4;
+    static int counter = 0;
 
-    public static boolean passwordCheck() {
-        while (count > 1) {
-            count--;
+    public static boolean passwordCheck(String name) {
+        while (counter < 3) {
             String password = Getters.getName();
-            if (!Checkers.checkAdminPassword(password.trim())) {
-                System.out.println("Uncorrect password, you have " + (count - 1) + " chance\\s");
-                passwordCheck();
+            if (!Checkers.checkAdminPassword(password.trim(), name)) {
+                System.out.println("Uncorrect password, you have " + (3 - counter++) + " chance\\s");
+                passwordCheck(name);
+            } else {
+                return true;
             }
-            if (count == 1) {
-                return false;
-            }
-            return true;
         }
+        Menus.stop();
         return false;
     } // end of the method
 
@@ -90,34 +97,34 @@ public class Checkers {
                 new FileReader("E:\\Main_folder\\programming\\java\\Library\\src\\Data\\Admins.txt"))) {
             String line = br.readLine();
             while (line != null) {
-                boolean email = true, phoneNumber = true, id = true;
-                String fullData[] = line.split(",");
-                for (String data : fullData) {
-                    String info[] = data.split(":");
+                boolean isEmail = true, isPhonenumber = true, isId = true;
+                String data[] = line.split(",");
+                for (String subData : data) {
+                    String info[] = subData.split(":");
                     switch (info[0].trim()) {
                         case "id":
                             if (Integer.parseInt(info[1].trim()) == admin.getAdminId()) {
-                                id = false;
+                                isId = false;
                             }
                             break;
                         case "email":
                             if (info[1].trim().toLowerCase().equals(admin.getEmail().toLowerCase())) {
                                 System.out
                                         .println("the email is already exist in the system, please try another emial");
-                                email = false;
+                                isEmail = false;
                             }
                             break;
-                        case "phoneNumber":
+                        case "phone-number":
                             if (admin.getphoneNumber().toString() == info[1].trim()) {
                                 System.out
                                         .println(
                                                 "the phone number is already exist in the system, please try another emial");
-                                phoneNumber = false;
+                                isPhonenumber = false;
                             }
                             break;
                     }
                 }
-                if (!(email || phoneNumber || id)) {
+                if (!(isEmail || isPhonenumber || isId)) {
                     return false;
                 }
                 line = br.readLine();
@@ -135,9 +142,9 @@ public class Checkers {
                 new FileReader("E:\\Main_folder\\programming\\java\\Library\\src\\Data\\admins.txt"));) {
             String line = br.readLine();
             while (line != null) {
-                String fullData[] = line.split(",");
-                for (String data : fullData) {
-                    String info[] = data.split(":");
+                String data[] = line.split(",");
+                for (String subData : data) {
+                    String info[] = subData.split(":");
                     switch (info[0].trim()) {
                         case "id":
                             if (Integer.parseInt(info[1].trim()) == id) {
@@ -156,27 +163,27 @@ public class Checkers {
     }
 
     // check admin is exist in the memory
-    public static boolean checkAdminIsExist(String adminName, String Adminemail) {
+    public static boolean checkAdminIsExist(String name, String email) {
         try (BufferedReader br = new BufferedReader(
                 new FileReader("E:\\Main_folder\\programming\\java\\Library\\src\\Data\\admins.txt"));) {
             String line = br.readLine();
             while (line != null) {
-                boolean name = false, email = false;
-                String fullData[] = line.split(",");
-                for (String data : fullData) {
-                    String info[] = data.split(":");
+                boolean isName = false, isEmail = false;
+                String data[] = line.split(",");
+                for (String subData : data) {
+                    String info[] = subData.split(":");
                     switch (info[0].trim()) {
-                        case "adminName":
-                            if (info[1].trim().toLowerCase().equals(adminName.toLowerCase()))
-                                name = true;
+                        case "name":
+                            if (info[1].trim().toLowerCase().equals(name.toLowerCase()))
+                                isName = true;
                             break;
                         case "email":
-                            if (info[1].trim().toLowerCase().equals(Adminemail.toLowerCase()))
-                                email = true;
+                            if (info[1].trim().toLowerCase().equals(email.toLowerCase()))
+                                isEmail = true;
                             break;
                     }
                 }
-                if (name && email) {
+                if (isName && isEmail) {
                     return true;
                 }
                 line = br.readLine();
@@ -190,43 +197,43 @@ public class Checkers {
 
     // related to tanate class
     // check if a tenate is exist in the memory
-    public static boolean checkTenateIsValid(Tenate tenate) {
+    public static boolean checkTenateIsValid(User tenate) {
         try (BufferedReader br = new BufferedReader(
                 new FileReader("E:\\Main_folder\\programming\\java\\Library\\src\\Data\\users.txt"))) {
             String line = br.readLine();
             while (line != null) {
-                boolean email = true, id = true, phoneNumber = true;
-                String fullData[] = line.split(",");
-                for (String data : fullData) {
-                    String info[] = data.split(":");
+                boolean isEmail = true, isId = true, isPhonenumber = true;
+                String data[] = line.split(",");
+                for (String subData : data) {
+                    String info[] = subData.split(":");
                     switch (info[0].trim()) {
                         case "name":
                             break;
                         case "id":
                             if (Integer.parseInt(info[1].trim()) == tenate.getUserId()) {
-                                id = false;
+                                isId = false;
                             }
                             break;
                         case "email":
                             if (info[1].trim().toLowerCase().equals(tenate.getEmail().toLowerCase())) {
                                 System.out
                                         .println("the email is already exist in the system, please try another emial");
-                                email = false;
+                                isEmail = false;
                             }
                             break;
-                        case "phoneNumber":
+                        case "phone-number":
                             if (tenate.getphoneNumber().toString() == info[1].trim()) {
                                 System.out
                                         .println(
                                                 "the phone number is already exist in the system, please try another emial");
-                                phoneNumber = false;
+                                isPhonenumber = false;
                             }
                             break;
                         default:
                             System.out.println("something went wrong");
                     }
                 }
-                if (!id || !email || !phoneNumber) {
+                if (!isId || !isEmail || !isPhonenumber) {
                     return false;
                 }
                 line = br.readLine();
@@ -239,41 +246,41 @@ public class Checkers {
     } // end of the method
 
     // check if tenate is exist in the memory
-    public static boolean checkTenateIsExist(Tenate tenate) {
+    public static boolean checkTenateIsExist(User tenate) {
         try (BufferedReader br = new BufferedReader(
                 new FileReader("E:\\Main_folder\\programming\\java\\Library\\src\\Data\\users.txt"));) {
             String line = br.readLine();
             while (line != null) {
-                boolean name = false, email = false, id = false, phoneNumber = false;
-                String fullData[] = line.split(",");
-                for (String data : fullData) {
-                    String info[] = data.split(":");
+                boolean isName = false, isEmail = false, isId = false, isPhonenumber = false;
+                String data[] = line.split(",");
+                for (String subData : data) {
+                    String info[] = subData.split(":");
                     switch (info[0].trim()) {
                         case "name":
                             if (info[1].trim().toLowerCase().equals(tenate.getName().toLowerCase()))
                                 ;
-                            name = true;
+                            isName = true;
                             break;
                         case "id":
                             if (Integer.parseInt(info[1].trim()) == tenate.getUserId())
                                 ;
-                            id = true;
+                            isId = true;
                             break;
                         case "email":
                             if (info[1].trim().toLowerCase().equals(tenate.getEmail().toLowerCase()))
                                 ;
-                            email = true;
+                            isEmail = true;
                             break;
-                        case "phoneNumber":
+                        case "phone-number":
                             if (info[1].trim().toLowerCase().equals(tenate.getphoneNumber().toLowerCase()))
                                 ;
-                            phoneNumber = true;
+                            isPhonenumber = true;
                             break;
                         default:
                             System.out.println("something went wrong");
                     }
                 }
-                if (name && email && id && phoneNumber) {
+                if (isName && isEmail && isId && isPhonenumber) {
                     return true;
                 }
                 line = br.readLine();
@@ -291,9 +298,9 @@ public class Checkers {
                 new FileReader("E:\\Main_folder\\programming\\java\\Library\\src\\Data\\users.txt"));) {
             String line = br.readLine();
             while (line != null) {
-                String fullData[] = line.split(",");
-                for (String data : fullData) {
-                    String info[] = data.split(":");
+                String data[] = line.split(",");
+                for (String subData : data) {
+                    String info[] = subData.split(":");
                     switch (info[0].trim()) {
                         case "id":
                             if (Integer.parseInt(info[1].trim()) == id) {
@@ -312,27 +319,27 @@ public class Checkers {
     }
 
     // check user is exist in the memory
-    public static boolean checkUserIsExist(String userName, String userEmail) {
+    public static boolean checkUserIsExist(String name, String email) {
         try (BufferedReader br = new BufferedReader(
                 new FileReader("E:\\Main_folder\\programming\\java\\Library\\src\\Data\\users.txt"));) {
             String line = br.readLine();
             while (line != null) {
-                boolean name = false, email = false;
-                String fullData[] = line.split(",");
-                for (String data : fullData) {
-                    String info[] = data.split(":");
+                boolean isName = false, isEmail = false;
+                String data[] = line.split(",");
+                for (String subData : data) {
+                    String info[] = subData.split(":");
                     switch (info[0].trim()) {
                         case "name":
-                            if (info[1].trim().toLowerCase().equals(userName.toLowerCase()))
-                                name = true;
+                            if (info[1].trim().toLowerCase().equals(name.toLowerCase()))
+                                isName = true;
                             break;
                         case "email":
-                            if (info[1].trim().toLowerCase().equals(userEmail.toLowerCase()))
-                                email = true;
+                            if (info[1].trim().toLowerCase().equals(email.toLowerCase()))
+                                isEmail = true;
                             break;
                     }
                 }
-                if (name && email) {
+                if (isName && isEmail) {
                     return true;
                 }
                 line = br.readLine();
@@ -351,24 +358,24 @@ public class Checkers {
                 new FileReader("E:\\Main_folder\\programming\\java\\Library\\src\\Data\\books.txt"));) {
             String line = br.readLine();
             while (line != null) {
-                boolean name = false, author = false;
-                String fullData[] = line.split(",");
-                for (String data : fullData) {
-                    String info[] = data.split(":");
+                boolean isName = false, isAuthor = false;
+                String data[] = line.split(",");
+                for (String subData : data) {
+                    String info[] = subData.split(":");
                     switch (info[0].trim()) {
-                        case "bookName":
+                        case "book-name":
                             if (info[1].trim().toLowerCase().equals(book.getBookName().toLowerCase()))
                                 ;
-                            name = true;
+                            isName = true;
                             break;
                         case "author":
                             if (info[1].trim().toLowerCase().equals(book.getAuthor().toLowerCase()))
                                 ;
-                            author = true;
+                            isAuthor = true;
                             break;
                     }
                 }
-                if (name && author) {
+                if (isName && isAuthor) {
                     return true;
                 }
                 line = br.readLine();
@@ -386,9 +393,9 @@ public class Checkers {
                 new FileReader("E:\\Main_folder\\programming\\java\\Library\\src\\Data\\books.txt"));) {
             String line = br.readLine();
             while (line != null) {
-                String fullData[] = line.split(",");
-                for (String data : fullData) {
-                    String info[] = data.split(":");
+                String data[] = line.split(",");
+                for (String subData : data) {
+                    String info[] = subData.split(":");
                     switch (info[0].trim()) {
                         case "code":
                             if (info[1].trim().toLowerCase().equals(id)) {
@@ -407,31 +414,64 @@ public class Checkers {
     }
 
     // check if book is exist
-    public static boolean checkBookIsExist(String book, String AuthonName) {
+    public static boolean checkBookIsExist(String name, String author) {
         try (BufferedReader br = new BufferedReader(
                 new FileReader("E:\\Main_folder\\programming\\java\\Library\\src\\Data\\books.txt"));) {
             String line = br.readLine();
             while (line != null) {
-                boolean bookName = false, author = false, quantity = false;
-                String fullData[] = line.split(",");
-                for (String data : fullData) {
-                    String info[] = data.split(":");
+                boolean isName = false, isAuthor = false, isQuantity = false;
+                String data[] = line.split(",");
+                for (String subData : data) {
+                    String info[] = subData.split(":");
                     switch (info[0].trim()) {
-                        case "bookName":
-                            if (info[1].trim().toLowerCase().equals(book.toLowerCase()))
-                                bookName = true;
+                        case "book-name":
+                            if (info[1].trim().toLowerCase().equals(name.toLowerCase()))
+                                isName = true;
                             break;
                         case "author":
-                            if (info[1].trim().toLowerCase().equals(AuthonName.toLowerCase()))
-                                author = true;
+                            if (info[1].trim().toLowerCase().equals(author.toLowerCase()))
+                                isAuthor = true;
                             break;
                         case "quantity":
                             if (Integer.parseInt(info[1].trim()) > 0)
-                                quantity = true;
+                                isQuantity = true;
                             break;
                     }
                 }
-                if (bookName && author && quantity) {
+                if (isName && isAuthor && isQuantity) {
+                    return true;
+                }
+                line = br.readLine();
+            }
+            return false;
+        } catch (Exception e) {
+            System.out.println("Something went wrong please try again\n");
+            return false;
+        }
+    }
+
+    // check if book is exist to delete it
+    public static boolean checkBookIsExistToDelete(String name, String author) {
+        try (BufferedReader br = new BufferedReader(
+                new FileReader("E:\\Main_folder\\programming\\java\\Library\\src\\Data\\books.txt"));) {
+            String line = br.readLine();
+            while (line != null) {
+                boolean isName = false, isAuthor = false;
+                String data[] = line.split(",");
+                for (String subData : data) {
+                    String info[] = subData.split(":");
+                    switch (info[0].trim()) {
+                        case "book-name":
+                            if (info[1].trim().toLowerCase().equals(name.toLowerCase()))
+                                isName = true;
+                            break;
+                        case "author":
+                            if (info[1].trim().toLowerCase().equals(author.toLowerCase()))
+                                isAuthor = true;
+                            break;
+                    }
+                }
+                if (isName && isAuthor) {
                     return true;
                 }
                 line = br.readLine();
@@ -444,35 +484,35 @@ public class Checkers {
     }
 
     // check if user in borrowed data
-    public static boolean checkIfUserInBorrowedData(String userName, String userEmail, String bookName, String author) {
+    public static boolean checkIfUserInBorrowedData(String name, String email, String bookname, String author) {
         try (BufferedReader br = new BufferedReader(
                 new FileReader("E:\\Main_folder\\programming\\java\\Library\\src\\Data\\booksBorrowed.txt"));) {
             String line = br.readLine();
             while (line != null) {
-                boolean name = false, email = false, book = false, authorName = false;
-                String fullData[] = line.split(",");
-                for (String data : fullData) {
-                    String info[] = data.split(":");
+                boolean isName = false, isEmail = false, isBook = false, isAuthor = false;
+                String data[] = line.split(",");
+                for (String subData : data) {
+                    String info[] = subData.split(":");
                     switch (info[0].trim()) {
-                        case "username":
-                            if (info[1].trim().toLowerCase().equals(userName.toLowerCase()))
-                                name = true;
+                        case "user-name":
+                            if (info[1].trim().toLowerCase().equals(name.toLowerCase()))
+                                isName = true;
                             break;
                         case "email":
-                            if (info[1].trim().toLowerCase().equals(userEmail.toLowerCase()))
-                                email = true;
+                            if (info[1].trim().toLowerCase().equals(email.toLowerCase()))
+                                isEmail = true;
                             break;
                         case "book":
-                            if (info[1].trim().toLowerCase().equals(bookName.toLowerCase()))
-                                book = true;
+                            if (info[1].trim().toLowerCase().equals(bookname.toLowerCase()))
+                                isBook = true;
                             break;
                         case "author":
                             if (info[1].trim().toLowerCase().equals(author.toLowerCase()))
-                                authorName = true;
+                                isAuthor = true;
                             break;
                     }
                 }
-                if (name && email && book && authorName) {
+                if (isName && isEmail && isBook && isAuthor) {
                     return true;
                 }
                 line = br.readLine();
@@ -485,27 +525,27 @@ public class Checkers {
     }
 
     // overload for the same method
-    public static boolean checkIfUserInBorrowedData(String userName, String userEmail) {
+    public static boolean checkIfUserInBorrowedData(String name, String email) {
         try (BufferedReader br = new BufferedReader(
                 new FileReader("E:\\Main_folder\\programming\\java\\Library\\src\\Data\\booksBorrowed.txt"));) {
             String line = br.readLine();
             while (line != null) {
-                boolean name = false, email = false;
-                String fullData[] = line.split(",");
-                for (String data : fullData) {
-                    String info[] = data.split(":");
+                boolean isName = false, isEmail = false;
+                String data[] = line.split(",");
+                for (String subData : data) {
+                    String info[] = subData.split(":");
                     switch (info[0].trim()) {
-                        case "username":
-                            if (info[1].trim().toLowerCase().equals(userName.toLowerCase()))
-                                name = true;
+                        case "user-name":
+                            if (info[1].trim().toLowerCase().equals(name.toLowerCase()))
+                                isName = true;
                             break;
                         case "email":
-                            if (info[1].trim().toLowerCase().equals(userEmail.toLowerCase()))
-                                email = true;
+                            if (info[1].trim().toLowerCase().equals(email.toLowerCase()))
+                                isEmail = true;
                             break;
                     }
                 }
-                if (name && email) {
+                if (isName && isEmail) {
                     return true;
                 }
                 line = br.readLine();

@@ -45,7 +45,7 @@ public class Main {
                 "welcome Mr\\s. " + name + ", I hope that you have a great day, may you please Enter your password");
 
         // check password in admins.txt
-        if (!Checkers.passwordCheck()) {
+        if (!Checkers.passwordCheck(name.trim())) {
             System.out.println("sorry. you do not hava an access to this system");
             return;
         }

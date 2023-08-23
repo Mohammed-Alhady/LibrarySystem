@@ -1,2 +1,1 @@
-adminName: Mohammed Ali, password : password, id = 10000, email : mohammed@example.com, phoneNumber : 0928626876
-adminName: mohammed ali alhady, password : password moha 44, id = 53213, email : moh@mo.com, phoneNumber : 0919992233
+name: Mohammed Ali, password : password, id = 10000, email : mohammed@example.com, phone-number : 0928626876

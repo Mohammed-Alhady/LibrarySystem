@@ -32,7 +32,7 @@ public class Getters {
             }
             Long.parseLong(phoneNumber);
         } catch (NumberFormatException e) {
-            System.out.println("unvalid number");
+            System.out.println("unvalid number it must = 10 chars");
             System.out.println("please try again and enter a valid phone nubmer 09_ _ _ _,_ _,_ _");
             getPhoneNumber();
         }

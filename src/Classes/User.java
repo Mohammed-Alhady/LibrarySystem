@@ -1,37 +1,38 @@
 package src.Classes;
 
-// main class user
-public abstract class User {
+// user class inherit from User class
+public class User extends MainUser {
 
-    protected String name;
-    protected String email;
-    protected String phoneNumber;
+    // user id
+    private final long userId;
 
     public User() {
+        super();
+        this.userId = generateUniqueId();
     }
 
-    public String getName() {
-        return name;
+    public long getUserId() {
+        return this.userId;
     }
 
-    public String getEmail() {
-        return email;
+    @Override
+    public String toString() {
+        return "{" +
+                " user name='" + getName() + "'" +
+                " user email='" + getEmail() + "'" +
+                " user number='" + getphoneNumber() + "'" +
+                " userId='" + getUserId() + "'" +
+                "}";
     }
 
-    public String getphoneNumber() {
-        return phoneNumber;
+    // create a unike id for every user
+    public static int generateUniqueId() {
+        // user range from 1 to 9999
+        int id = (int) (Math.random() * (9999 - 1 + 1) + 1);
+        // check if id is exist
+        if (!Checkers.checkIdInData(id)) {
+            generateUniqueId();
+        }
+        return id;
     }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setphoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
 }

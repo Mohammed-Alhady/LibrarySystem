@@ -10,11 +10,13 @@ public class AdminMethods {
     // add a new user in users.txt file
     public static void addUser() {
         // name
-        Tenate tenate = new Tenate();
+        System.out.println("enter a user name");
+        User tenate = new User();
         String name = Getters.getName();
         tenate.setName(name);
 
         // email
+        System.out.println("enter a user email");
         String email = Getters.getEmail();
         tenate.setEmail(email);
 
@@ -47,12 +49,13 @@ public class AdminMethods {
     public static void addBook() {
         try {
             // book name
+            System.out.println("enter the book name");
             Book book = new Book();
             String bookName = Getters.getName();
             book.setBookName(bookName);
 
             // book Quantity
-            System.out.println("inter the book Quantity");
+            System.out.println("enter the book Quantity");
             int quantity = Getters.getNumber();
             book.setQuantity(quantity);
 
@@ -80,7 +83,8 @@ public class AdminMethods {
             // write the new book in books.txt file
             BufferedWriter br = new BufferedWriter(
                     new FileWriter("E:\\Main_folder\\programming\\java\\Library\\src\\Data\\books.txt", true));
-            br.write("\nbookName : " + book.getBookName() + ", quantity : 1, author : " + book.getAuthor()
+            br.write("\nbookName : " + book.getBookName() + ", quantity : " + book.getQuantity() + ", author : "
+                    + book.getAuthor()
                     + ", description : " + book.getDescription() + ", code : " + book.getCode() + ", price : "
                     + book.getPrice());
             br.flush();
@@ -125,7 +129,7 @@ public class AdminMethods {
         try {
             BufferedWriter br = new BufferedWriter(
                     new FileWriter("E:\\Main_folder\\programming\\java\\Library\\src\\Data\\admins.txt", true));
-            br.write("\nadminName: " + admin.getName() + ", password : " + admin.getPassword() + ", id = "
+            br.write("\nname: " + admin.getName() + ", password : " + admin.getPassword() + ", id = "
                     + admin.getAdminId() + ", email : " + admin.getEmail() + ", phoneNumber : "
                     + admin.getphoneNumber());
             br.flush();
@@ -209,7 +213,7 @@ public class AdminMethods {
 
         // check if book is exist
         // if the book is not exist try again
-        if (!Checkers.checkBookIsExist(bookName, AuthonName)) {
+        if (!Checkers.checkBookIsExistToDelete(bookName, AuthonName)) {
             System.out.println("this book is not found, please try again");
             removerBook();
         }
@@ -327,27 +331,27 @@ public class AdminMethods {
             while (line != null) {
                 String bookName = "null", author = "null", description = "null", code = "null", price = "null";
                 boolean valid = true;
-                String types[] = line.split(",");
-                for (String type : types) {
-                    String data[] = type.split(":");
-                    switch (data[0].trim()) {
-                        case "bookName":
-                            bookName = data[1];
+                String data[] = line.split(",");
+                for (String subData : data) {
+                    String info[] = subData.split(":");
+                    switch (info[0].trim()) {
+                        case "book-name":
+                            bookName = info[1];
                             break;
                         case "author":
-                            author = data[1];
+                            author = info[1];
                             break;
                         case "description":
-                            description = data[1];
+                            description = info[1];
                             break;
                         case "code":
-                            code = data[1];
+                            code = info[1];
                             break;
                         case "price":
-                            price = data[1];
+                            price = info[1];
                             break;
                         case "quantity":
-                            if (Integer.parseInt(data[1].trim()) <= 0) {
+                            if (Integer.parseInt(info[1].trim()) <= 0) {
                                 valid = false;
                             }
                             break;

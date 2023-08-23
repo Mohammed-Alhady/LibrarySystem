@@ -1,13 +1,14 @@
 package src.Classes;
 
 // class admin inhiret from user
-public class Admin extends User {
+public class Admin extends MainUser {
 
     // password and id
     private String password;
     private final long AdminId;
 
     public Admin() {
+        super();
         this.AdminId = generateUniqueId();
     }
 
