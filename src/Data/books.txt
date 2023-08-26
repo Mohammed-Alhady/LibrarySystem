@@ -1,2 +1,2 @@
 book-name : book, quantity : 2, author : admin, description : hola hola is a book, code : Q183, price : 12.0
-book-name : under 40, quantity : 1, author : Lencon Be, description : under 40 is a book for young people to learn something new in there lifes, code : R183, price : 200.0
+bookName : under 40, quantity : 10, author : Lencon Be, description : a book from another world, code : W4, price : 200.0

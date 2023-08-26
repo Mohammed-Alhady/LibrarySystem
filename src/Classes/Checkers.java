@@ -29,7 +29,7 @@ public class Checkers {
             }
             return false;
         } catch (Exception e) {
-            System.out.println("Something went wrong please try again\n");
+            System.out.println("#Error: Something went wrong please try again#");
             return false;
         }
     } // end of the method
@@ -46,7 +46,6 @@ public class Checkers {
                     String info[] = subData.split(":");
                     switch (info[0].trim()) {
                         case "password":
-                            System.out.println(info[1].trim().toLowerCase().equals(password.toLowerCase()));
                             if (info[1].trim().toLowerCase().equals(password.toLowerCase())) {
                                 isPassword = true;
                             }
@@ -63,7 +62,7 @@ public class Checkers {
             }
             return false;
         } catch (Exception e) {
-            System.out.println("Something went wrong please try again\n");
+            System.out.println("#Error: Something went wrong please try again#");
             return false;
         }
     } // end of the method
@@ -110,7 +109,8 @@ public class Checkers {
                         case "email":
                             if (info[1].trim().toLowerCase().equals(admin.getEmail().toLowerCase())) {
                                 System.out
-                                        .println("the email is already exist in the system, please try another emial");
+                                        .println(
+                                                "#Error: The email is already exist in the system, please try another emial#");
                                 isEmail = false;
                             }
                             break;
@@ -118,7 +118,7 @@ public class Checkers {
                             if (admin.getphoneNumber().toString() == info[1].trim()) {
                                 System.out
                                         .println(
-                                                "the phone number is already exist in the system, please try another emial");
+                                                "#Error: The phone number is already exist in the system, please try another one#");
                                 isPhonenumber = false;
                             }
                             break;
@@ -131,7 +131,7 @@ public class Checkers {
             }
             return true;
         } catch (Exception e) {
-            System.out.println("Something went wrong please try again\n");
+            System.out.println("#Error: Something went wrong please try again#");
             return false;
         }
     }
@@ -157,7 +157,7 @@ public class Checkers {
             }
             return true;
         } catch (Exception e) {
-            System.out.println("Something went wrong please try again\n");
+            System.out.println("#Error: Something went wrong please try again#");
             return false;
         }
     }
@@ -190,7 +190,7 @@ public class Checkers {
             }
             return false;
         } catch (Exception e) {
-            System.out.println("Something went wrong please try again\n");
+            System.out.println("#Error: Something went wrong please try again#");
             return false;
         }
     }
@@ -230,7 +230,7 @@ public class Checkers {
                             }
                             break;
                         default:
-                            System.out.println("something went wrong");
+                            System.out.println("#Error: Something went wrong#");
                     }
                 }
                 if (!isId || !isEmail || !isPhonenumber) {
@@ -240,7 +240,7 @@ public class Checkers {
             }
             return true;
         } catch (Exception e) {
-            System.out.println("Something went wrong please try again\n");
+            System.out.println("#Error: Something went wrong please try again#");
             return false;
         }
     } // end of the method
@@ -277,7 +277,7 @@ public class Checkers {
                             isPhonenumber = true;
                             break;
                         default:
-                            System.out.println("something went wrong");
+                            System.out.println("#Error: Something went wrong#");
                     }
                 }
                 if (isName && isEmail && isId && isPhonenumber) {
@@ -287,7 +287,7 @@ public class Checkers {
             }
             return false;
         } catch (Exception e) {
-            System.out.println("Something went wrong please try again\n");
+            System.out.println("#Error: Something went wrong please try again#");
             return false;
         }
     } // end of the function
@@ -313,7 +313,7 @@ public class Checkers {
             }
             return true;
         } catch (Exception e) {
-            System.out.println("Something went wrong please try again\n");
+            System.out.println("#Error: Something went wrong please try again#");
             return false;
         }
     }
@@ -346,7 +346,7 @@ public class Checkers {
             }
             return false;
         } catch (Exception e) {
-            System.out.println("Something went wrong please try again\n");
+            System.out.println("#Error: Something went wrong please try again#");
             return false;
         }
     }
@@ -382,7 +382,7 @@ public class Checkers {
             }
             return false;
         } catch (Exception e) {
-            System.out.println("Something went wrong please try again\n");
+            System.out.println("#Error: Something went wrong please try again#");
             return false;
         }
     }
@@ -408,7 +408,7 @@ public class Checkers {
             }
             return true;
         } catch (Exception e) {
-            System.out.println("Something went wrong please try again\n");
+            System.out.println("#Error: Something went wrong please try again#");
             return false;
         }
     }
@@ -445,7 +445,7 @@ public class Checkers {
             }
             return false;
         } catch (Exception e) {
-            System.out.println("Something went wrong please try again\n");
+            System.out.println("#Error: Something went wrong please try again#");
             return false;
         }
     }
@@ -478,7 +478,7 @@ public class Checkers {
             }
             return false;
         } catch (Exception e) {
-            System.out.println("Something went wrong please try again\n");
+            System.out.println("#Error: Something went wrong please try again#");
             return false;
         }
     }
@@ -519,7 +519,7 @@ public class Checkers {
             }
             return false;
         } catch (Exception e) {
-            System.out.println("Something went wrong please try again\n");
+            System.out.println("#Errro: Something went wrong please try again#");
             return false;
         }
     }
@@ -552,7 +552,7 @@ public class Checkers {
             }
             return false;
         } catch (Exception e) {
-            System.out.println("Something went wrong please try again\n");
+            System.out.println("#Error: Something went wrong please try again#");
             return false;
         }
     }

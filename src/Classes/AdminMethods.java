@@ -10,25 +10,25 @@ public class AdminMethods {
     // add a new user in users.txt file
     public static void addUser() {
         // name
-        System.out.println("enter a user name");
+        System.out.println("#Enter a user name#");
         User tenate = new User();
         String name = Getters.getName();
         tenate.setName(name);
 
         // email
-        System.out.println("enter a user email");
+        System.out.println("#Enter a user email#");
         String email = Getters.getEmail();
         tenate.setEmail(email);
 
         // phone number
-        System.out.println("enter a phonenumber");
+        System.out.println("#Enter a phonenumber#");
         String phoneNumber = Getters.getPhoneNumber();
         tenate.setphoneNumber(phoneNumber);
 
         // check if user is exist
         if (!Checkers.checkTenateIsValid(tenate)) {
-            System.out.println("this tanate info are already exist in the memory");
-            addUser();
+            System.out.println("#Error: This user info are already exist in the memory#");
+            Menus.adminMenu();
         }
 
         // write the new user
@@ -40,8 +40,8 @@ public class AdminMethods {
             br.flush();
             br.close();
         } catch (Exception e) {
-            System.out.println("something went wrong please try again");
-            addUser();
+            System.out.println("#Error: Something went wrong please try again#");
+            Menus.adminMenu();
         }
     }
 
@@ -49,35 +49,35 @@ public class AdminMethods {
     public static void addBook() {
         try {
             // book name
-            System.out.println("enter the book name");
+            System.out.println("#Enter the book name#");
             Book book = new Book();
             String bookName = Getters.getName();
             book.setBookName(bookName);
 
             // book Quantity
-            System.out.println("enter the book Quantity");
+            System.out.println("#Enter the book Quantity#");
             int quantity = Getters.getNumber();
             book.setQuantity(quantity);
 
             // author name
-            System.out.println("enter a name for " + bookName + "`s author");
+            System.out.println("#Enter a name for " + bookName + "`s author#");
             String AuthonName = Getters.getName();
             book.setAuthor(AuthonName);
 
             // description
-            System.out.println("enter the " + bookName + "`s description");
+            System.out.println("#Enter the " + bookName + "`s description#");
             String description = Getters.getName();
             book.setDescription(description);
 
             // price
-            System.out.println("enter the " + bookName + "`s price");
+            System.out.println("#Enter the " + bookName + "`s price#");
             float price = Getters.getFloat();
             book.setPrice(price);
 
             // check if book is exist and then write the info
             if (!Checkers.checKBookIsValid(book)) {
-                System.out.println("this book info is already exist in the memory");
-                addBook();
+                System.out.println("#Error: This book info is already exist in the memory#");
+                Menus.adminMenu();
             }
 
             // write the new book in books.txt file
@@ -91,8 +91,8 @@ public class AdminMethods {
             br.close();
 
         } catch (Exception e) {
-            System.out.println("Something went wrong, please try again");
-            addBook();
+            System.out.println("#Error: Something went wrong, please try again#");
+            Menus.adminMenu();
         }
     }
 
@@ -100,29 +100,29 @@ public class AdminMethods {
     public static void addANewAdmin() {
         Admin admin = new Admin();
         // name
-        System.out.println("enter a name for the new admin");
+        System.out.println("#Enter a name for the new admin#");
         String name = Getters.getName();
         admin.setName(name);
 
         // password
-        System.out.println("enter a password for " + name);
+        System.out.println("#Enter a password for " + name + "#");
         String password = Getters.getName();
         admin.setPassword(password);
 
         // email
-        System.out.println("enter a valid email for " + name);
+        System.out.println("#Enter a valid email for " + name + "#");
         String email = Getters.getEmail();
         admin.setEmail(email);
 
         // phone number
-        System.out.println("enter a phonenumber");
+        System.out.println("#Enter a phonenumber#");
         String phoneNumber = Getters.getPhoneNumber();
         admin.setphoneNumber(phoneNumber);
 
         // check if exist in the memory
         if (!Checkers.checkAdminIsValid(admin)) {
-            System.out.println("this admin is already exist, please try again");
-            addANewAdmin();
+            System.out.println("#Enter: This admin is already exist, please try again#");
+            Menus.adminMenu();
         }
 
         // add the admin in admins.txt
@@ -135,25 +135,25 @@ public class AdminMethods {
             br.flush();
             br.close();
         } catch (Exception e) {
-            System.out.println("something went wrong please try again");
-            addANewAdmin();
+            System.out.println("#Error: Something went wrong, please try again#");
+            Menus.adminMenu();
         }
     }
 
     // remove an old user from users.txt
     public static void removerUser() {
         // name
-        System.out.println("enter the user name");
-        String userNmae = Getters.getName();
+        System.out.println("#Enter the user name#");
+        String userName = Getters.getName();
 
         // email
-        System.out.println("enter the emial for " + userNmae);
+        System.out.println("#Enter the emial for " + userName + "#");
         String email = Getters.getEmail();
 
         // check if exist
-        if (!Checkers.checkUserIsExist(userNmae, email)) {
-            System.out.println("this admin is not found, please try again");
-            removerUser();
+        if (!Checkers.checkUserIsExist(userName, email)) {
+            System.out.println("#Error: This user is not found, please try again#");
+            Menus.adminMenu();
         }
 
         // write the new user in users.txt file
@@ -174,7 +174,7 @@ public class AdminMethods {
                 String data[] = line.split(",");
                 String dataAdminName[] = data[0].split(":");
                 String dataAdminEmail[] = data[2].split(":");
-                boolean deleate = (dataAdminName[1].trim().toLowerCase().equals(userNmae.toLowerCase()))
+                boolean deleate = (dataAdminName[1].trim().toLowerCase().equals(userName.toLowerCase()))
                         && (dataAdminEmail[1].trim().toLowerCase().equals(email.toLowerCase()));
                 if (!deleate) {
                     pw.println(line);
@@ -186,17 +186,15 @@ public class AdminMethods {
 
             // Delete the original file
             if (!inFile.delete()) {
-                System.out.println("Could not delete file");
-                return;
+                System.out.println("#Could not delete file#");
+                Menus.stop();
             }
 
             // Rename the new file to the filename the original file had.
             if (!tempFile.renameTo(inFile))
-                System.out.println("Could not rename file");
-        } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
-        } catch (IOException ex) {
-            ex.printStackTrace();
+                System.out.println("#Could not rename file#");
+        } catch (Exception e) {
+            System.out.println("#Error: Something went wrong, please try again#");
         }
     }
 
@@ -204,18 +202,18 @@ public class AdminMethods {
     public static void removerBook() {
 
         // book name
-        System.out.println("enter the book name");
+        System.out.println("#Enter the book name#");
         String bookName = Getters.getName();
 
         // author name
-        System.out.println("enter the author for " + bookName);
+        System.out.println("#Enter the author for " + bookName + "#");
         String AuthonName = Getters.getName();
 
         // check if book is exist
         // if the book is not exist try again
         if (!Checkers.checkBookIsExistToDelete(bookName, AuthonName)) {
-            System.out.println("this book is not found, please try again");
-            removerBook();
+            System.out.println("#Error: This book is not found, please try again#");
+            Menus.adminMenu();
         }
 
         // remove the book if is exist
@@ -248,34 +246,38 @@ public class AdminMethods {
 
             // Delete the original file
             if (!inFile.delete()) {
-                System.out.println("Could not delete file");
-                return;
+                System.out.println("#Could not delete file#");
+                Menus.stop();
             }
 
             // Rename the new file to the filename the original file had.
             if (!tempFile.renameTo(inFile))
-                System.out.println("Could not rename file");
-        } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
-        } catch (IOException ex) {
-            ex.printStackTrace();
+                System.out.println("#Could not rename file#");
+        } catch (Exception e) {
+            System.out.println("#Error: Something went wrong, please try again#");
+            Menus.adminMenu();
         }
     }
 
     // remove an old admin
     public static void removeAdmin() {
         // name
-        System.out.println("enter the admin name");
+        System.out.println("#Enter the admin name#");
         String adminName = Getters.getName();
 
         // email
-        System.out.println("enter the emial for " + adminName);
+        System.out.println("#Enter the emial for " + adminName + "#");
         String email = Getters.getEmail();
 
         // check if admin is exist to remove him
         if (!Checkers.checkAdminIsExist(adminName, email)) {
-            System.out.println("this admin is not found, please try again");
-            removeAdmin();
+            System.out.println("#Error: This admin is not found, please try again#");
+            Menus.adminMenu();
+        }
+
+        if (adminName.equalsIgnoreCase("mohammed ali") && email.equalsIgnoreCase("mohammed@example.com")) {
+            System.out.println("#Error: You can not remove this admin#");
+            Menus.adminMenu();
         }
 
         // remove the admin from admins.txt
@@ -308,17 +310,16 @@ public class AdminMethods {
 
             // Delete the original file
             if (!inFile.delete()) {
-                System.out.println("Could not delete file");
-                return;
+                System.out.println("#Could not delete file#");
+                Menus.stop();
             }
 
             // Rename the new file to the filename the original file had.
             if (!tempFile.renameTo(inFile))
-                System.out.println("Could not rename file");
-        } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
-        } catch (IOException ex) {
-            ex.printStackTrace();
+                System.out.println("#Could not rename file#");
+        } catch (Exception e) {
+            System.out.println("#Error: Something went wrong, please try again#");
+            Menus.adminMenu();
         }
     }
 
@@ -365,7 +366,8 @@ public class AdminMethods {
             }
             br.close();
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println("#Error: Something went wrong, please try again#");
+            Menus.adminMenu();
         }
     }
 

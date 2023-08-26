@@ -7,15 +7,15 @@ public class UserMethods {
     // borrow a book
     public static void borrowABook(String name, String email) {
         // name
-        System.out.println("enter the book name");
+        System.out.println("##Enter the book name#");
         String bookName = Getters.getName();
         // author name
-        System.out.println("enter the book author");
+        System.out.println("#Enter the book author#");
         String author = Getters.getName();
         // check if book is exist
         if (!Checkers.checkBookIsExist(bookName, author)) {
-            System.out.println("this book is not exist, please try anther book");
-            borrowABook(name, email);
+            System.out.println("#Error: This book is not exist, please try anther book#");
+            Menus.userMenu(name, email);
         }
         // borrow the book
         borrow(name, email, bookName, author);
@@ -24,15 +24,15 @@ public class UserMethods {
     // return a book
     public static void returnABook(String name, String email) {
         // name
-        System.out.println("enter the book name");
+        System.out.println("#Enter the book name#");
         String bookName = Getters.getName();
         // author name
-        System.out.println("enter the book author");
+        System.out.println("#Enter the book author#");
         String author = Getters.getName();
         // check if user has this book
         if (Checkers.checkIfUserInBorrowedData(name, email, bookName, author)) {
-            System.out.println("you dont have this book, please try again");
-            returnABook(name, email);
+            System.out.println("#Error: You dont have this book, please try again#");
+            Menus.userMenu(name, email);
         }
         // return the book
         retrunBook(name, email, bookName, author);
@@ -41,15 +41,15 @@ public class UserMethods {
     // buy a book
     public static void buyABook(String name, String email) {
         // name
-        System.out.println("enter the book name");
+        System.out.println("#Enter the book name#");
         String bookName = Getters.getName();
         // author
-        System.out.println("enter the book author");
+        System.out.println("#Enter the book author#");
         String author = Getters.getName();
         // check if book is exist
         if (!Checkers.checkBookIsExist(bookName, author)) {
-            System.out.println("this book is not exist, please try anther book");
-            buyABook(name, email);
+            System.out.println("#Error: This book is not exist, please try anther book#");
+            Menus.userMenu(name, email);
         }
         // buy the book
         buy(name, email, bookName, author);
@@ -59,8 +59,8 @@ public class UserMethods {
     public static void showMyBooks(String name, String email) {
         // if user hasnt the book stop
         if (!Checkers.checkIfUserInBorrowedData(name, email)) {
-            System.out.println("you didnt borrow any book");
-            return;
+            System.out.println("#Error: You didnt borrow any book#");
+            Menus.userMenu(name, email);
         }
         // show the book
         show(name, email);
@@ -69,15 +69,15 @@ public class UserMethods {
     // find a book
     public static void findABook(String name, String email) {
         // name
-        System.out.println("enter the book name");
+        System.out.println("#Enter the book name#");
         String bookName = Getters.getName();
         // author name
-        System.out.println("enter the book author");
+        System.out.println("#Enter the book author#");
         String author = Getters.getName();
         // check if this book is exist
         if (!Checkers.checkBookIsExist(bookName, author)) {
-            System.out.println("this book is not exist, please try anther book");
-            findABook(bookName, email);
+            System.out.println("#Error: This book is not exist, please try anther book#");
+            Menus.userMenu(name, email);
         }
         // find it
         find(bookName, author);
@@ -126,9 +126,9 @@ public class UserMethods {
                         pw.println(newLine);
                         pw.flush();
                     } else {
-                        System.out.println("you already has this book");
+                        System.out.println("#Error: you already has this book");
+                        Menus.userMenu(name, email);
                     }
-
                 } else {
                     pw.println(line);
                     pw.flush();
@@ -140,16 +140,15 @@ public class UserMethods {
             // Delete the original file
             if (!inFile.delete()) {
                 System.out.println("Could not delete file");
-                return;
+                Menus.stop();
             }
 
             // Rename the new file to the filename the original file had.
             if (!tempFile.renameTo(inFile))
                 System.out.println("Could not rename file");
-        } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
-        } catch (IOException ex) {
-            ex.printStackTrace();
+        } catch (Exception e) {
+            System.out.println("#Error: Something went wrong, please try again");
+            Menus.userMenu(name, email);
         }
     }
 
@@ -158,7 +157,7 @@ public class UserMethods {
         try {
             // check if user exist
             if (Checkers.checkIfUserInBorrowedData(name, email, bookName, author)) {
-                System.out.println("you already has this book");
+                System.out.println("#Error: you already has this book");
                 return false;
             }
 
@@ -172,7 +171,7 @@ public class UserMethods {
             // unless content matches data to be removed.
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("#Error: Something went wrong, please try again");
             return false;
         }
     }
@@ -228,16 +227,15 @@ public class UserMethods {
             // Delete the original file
             if (!inFile.delete()) {
                 System.out.println("Could not delete file");
-                return;
+                Menus.stop();
             }
 
             // Rename the new file to the filename the original file had.
             if (!tempFile.renameTo(inFile))
                 System.out.println("Could not rename file");
-        } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
-        } catch (IOException ex) {
-            ex.printStackTrace();
+        } catch (Exception e) {
+            System.out.println("#Error: Something went wrong, please try again");
+            Menus.userMenu(name, email);
         }
     }
 
@@ -277,7 +275,7 @@ public class UserMethods {
             // Delete the original file
             if (!inFile.delete()) {
                 System.out.println("Could not delete file");
-                return;
+                Menus.stop();
             }
 
             // Rename the new file to the filename the original file had.
@@ -285,10 +283,9 @@ public class UserMethods {
                 System.out.println("Could not rename file");
 
             Menus.stop();
-        } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
-        } catch (IOException ex) {
-            ex.printStackTrace();
+        } catch (Exception e) {
+            System.out.println("#Error: Something went wrong, please try again");
+            Menus.userMenu(name, email);
         }
     }
 
@@ -346,7 +343,7 @@ public class UserMethods {
             // Delete the original file
             if (!inFile.delete()) {
                 System.out.println("Could not delete file");
-                return;
+                Menus.stop();
             }
 
             // Rename the new file to the filename the original file had.
@@ -354,10 +351,9 @@ public class UserMethods {
                 System.out.println("Could not rename file");
 
             Menus.stop();
-        } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
-        } catch (IOException ex) {
-            ex.printStackTrace();
+        } catch (Exception e) {
+            System.out.println("#Error: Something went wrong, please try again");
+            Menus.userMenu(name, email);
         }
     }
 
@@ -401,7 +397,8 @@ public class UserMethods {
             br.close();
             Menus.stop();
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println("#Error: Something went wrong, please try again");
+            Menus.userMenu(name, email);
         }
     }
 
@@ -452,7 +449,7 @@ public class UserMethods {
             }
 
             if (!exist) {
-                System.out.println("we cant find this book");
+                System.out.println("#Error: we cant find this book");
             }
             pw.close();
             br.close();
@@ -460,20 +457,16 @@ public class UserMethods {
             // Delete the original file
             if (!inFile.delete()) {
                 System.out.println("Could not delete file");
-                return;
+                Menus.stop();
             }
 
             // Rename the new file to the filename the original file had.
             if (!tempFile.renameTo(inFile))
                 System.out.println("Could not rename file");
-
             Menus.stop();
-        } catch (
-
-        FileNotFoundException ex) {
-            ex.printStackTrace();
-        } catch (IOException ex) {
-            ex.printStackTrace();
+        } catch (Exception e) {
+            System.out.println("#Error: Something went wrong, please try again");
+            Menus.stop();
         }
     }
 }
